@@ -32,11 +32,11 @@ According to the [requirement-1](./docs/requirements/Backend_take_home_test.pdf)
 
 
 #### Web-Client
-    - [ ] Displays SmartNumber and Name in the table form when the athlete enters the finish corridor
-    - [ ] Displays the finish time in the athlete's row of the table when the athlete crosses the finish line
-    - [ ] Only displays the latest record for each athlete? Need to confirm!
-    - [ ] Displays data without refreshing browser
-    - [ ] Documents
+- [ ] Displays SmartNumber and Name in the table form when the athlete enters the finish corridor
+- [ ] Displays the finish time in the athlete's row of the table when the athlete crosses the finish line
+- [ ] Only displays the latest record for each athlete? Need to confirm!
+- [ ] Displays data without refreshing browser
+- [ ] Documents
 
 #### Extra Tasks
 - [ ] The order of the displaying of the data need to change, when athlete B go over athelete A in the finishi corridor.

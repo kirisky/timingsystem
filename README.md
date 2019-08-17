@@ -6,13 +6,12 @@ According to the [requirement-1](./docs/requirements/Backend_take_home_test.pdf)
 
 #### Tasks
 - [ ] Protocol between Timing Service and Test-Client
-
     - [ ] Types of the timing points which are finish corridor and finish line
     - [ ] The IDs of the athletes
     - [ ] Precision of the time records is to second
     - [ ] Documents
-- [ ] Timing Service
 
+- [ ] Timing Service
     - [ ] Receives IDs of the athletes from Test-Client in Real-time
     - [ ] Receoves Types of the timing points
     - [ ] Get athletes' full names by their IDs
@@ -32,7 +31,6 @@ According to the [requirement-1](./docs/requirements/Backend_take_home_test.pdf)
     - [ ] Documents
 
 - [ ] Web-Client
-
     - [ ] Displays SmartNumber and Name in the table form when the athlete enters the finish corridor
     - [ ] Displays the finish time in the athlete's row of the table when the athlete crosses the finish line
     - [ ] Only displays the latest record for each athlete? Need to confirm!

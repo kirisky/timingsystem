@@ -5,13 +5,13 @@
 According to the [requirement-1](./docs/requirements/Backend_take_home_test.pdf) and [requirements-2](./docs/requirements/Requirements_of_the_task.png), summarized the following tasks:
 
 #### Tasks
-- [×] Protocol between Timing Service and Test-Client
+- [ ] Protocol between Timing Service and Test-Client
 
     - [ ] Types of the timing points which are finish corridor and finish line
     - [ ] The IDs of the athletes
     - [ ] Precision of the time records is to second
     - [ ] Documents
-- [×] Timing Service
+- [ ] Timing Service
 
     - [ ] Receives IDs of the athletes from Test-Client in Real-time
     - [ ] Receoves Types of the timing points
@@ -26,12 +26,12 @@ According to the [requirement-1](./docs/requirements/Backend_take_home_test.pdf)
         - [ ] Full name of the athletes
     - [ ] Documents
 
-- [×] Test-Client
+- [ ] Test-Client
     - [ ] Suppose that 10 athletes are there
     - [ ] Suppose that there are 10 priorities from 1 to 10 and the priorities are as factors for the speeds of the athletes
     - [ ] Documents
 
-- [×] Web-Client
+- [ ] Web-Client
 
     - [ ] Displays SmartNumber and Name in the table form when the athlete enters the finish corridor
     - [ ] Displays the finish time in the athlete's row of the table when the athlete crosses the finish line
@@ -40,17 +40,17 @@ According to the [requirement-1](./docs/requirements/Backend_take_home_test.pdf)
     - [ ] Documents
 
 #### Extra Tasks
-- [×] The order of the displaying of the data need to change, when athlete B go over athelete A in the finishi corridor.
+- [ ] The order of the displaying of the data need to change, when athlete B go over athelete A in the finishi corridor.
 
-- [×] The Web-Client should stop to communicate with server, when the window of the browser is in the backgorund.
+- [ ] The Web-Client should stop to communicate with server, when the window of the browser is in the backgorund.
 
-- [×] The Web-Client should resume connection with the server and communite with it, when the window of the browser is in the foreground.
+- [ ] The Web-Client should resume connection with the server and communite with it, when the window of the browser is in the foreground.
 
-- [√] Proving a loading animation to solve the problem that the data will display incorrect for a while when the browser window become actived from deactivated. 
+- [x] Proving a loading animation to solve the problem that the data will display incorrect for a while when the browser window become actived from deactivated. 
 
 #### Bonus Tasks
 
-- [×] Docker Compose File
+- [ ] Docker Compose File
 
 
 ## Choice of the libraries

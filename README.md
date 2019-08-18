@@ -4,13 +4,14 @@
 ## Analysing Logic of the Business
 According to the [requirement-1](./docs/requirements/Backend_take_home_test.pdf) and [requirements-2](./docs/requirements/Requirements_of_the_task.png), summarized the following tasks:
 
-#### Protocol between Timing Service and Test-Client
-- [ ] Types of the timing points which are finish corridor and finish line
+#### Tasks
+*Protocol between Timing Service and Test-Client*
+- [ ] Type of the timing point which is finish corridor or finish line
 - [ ] The IDs of the athletes
-- [ ] Precision of the time records is to second
+- [ ] Timing point and the precision of it is to second
 - [ ] Documents
 
-#### Timing Service
+*Timing Service*
 - [ ] Receives IDs of the athletes from Test-Client in Real-time
 - [ ] Receoves Types of the timing points
 - [ ] Get athletes' full names by their IDs
@@ -25,30 +26,60 @@ According to the [requirement-1](./docs/requirements/Backend_take_home_test.pdf)
 - [ ] Documents
 
 
-#### Test-Client    
-- [ ] Suppose that 10 athletes are there
-- [ ] Suppose that there are 10 priorities from 1 to 10 and the priorities are as factors for the speeds of the athletes
+*Test-Client*  
+- [ ] Sends data of the athletes' time points of finish corridor and finish line
+- [ ] Sends data of the athletes' IDs
 - [ ] Documents
 
 
-#### Web-Client
-- [ ] Displays SmartNumber and Name in the table form when the athlete enters the finish corridor
+*Web-Client*
+- [ ] Add a new row with SmartNumber and Name in the table form when the athlete enters the finish corridor
 - [ ] Displays the finish time in the athlete's row of the table when the athlete crosses the finish line
 - [ ] Only displays the latest record for each athlete? Need to confirm!
 - [ ] Displays data without refreshing browser
 - [ ] Documents
 
 #### Extra Tasks
-- [ ] The order of the displaying of the data need to change, when athlete B go over athelete A in the finishi corridor.
+- [ ] Reorder the data when generated the time point of the finish line.
 - [ ] The Web-Client should stop to communicate with server, when the window of the browser is in the backgorund.
 - [ ] The Web-Client should resume connection with the server and communite with it, when the window of the browser is in the foreground.
-- [x] Proving a loading animation to solve the problem that the data will display incorrect for a while when the browser window become actived from deactivated. 
+- [ ] Proving a loading animation to solve the problem that the data will display incorrect for a while when the browser window become actived from deactivated.
 
 #### Bonus Tasks
 - [ ] Docker Compose File
 
 
 ## Choice of the libraries
+
+*Relevance to Go*
+- gopkgs
+- gocode
+- gopkgs
+- go-outline
+- go-symbols
+- guru
+- gorename
+- dlv
+- gocode-gomod
+- godef
+- goreturns
+- golint
+
+*Database*
+- Sqlite
+- Go-SQLite3
+
+*Protocol*
+- gRPC
+- protoc
+
+*WebClient*
+- websocket
+- [Loading.Io](https://loading.io)
+
+*Container*
+- docker
+
 
 
 ## Parts of the project
@@ -59,8 +90,6 @@ According to the [requirement-1](./docs/requirements/Backend_take_home_test.pdf)
 #### Timing Mats
 
 - [Race Timing RFID Mats - How to Setup & Use](https://www.youtube.com/watch?v=MnkCDdUjP5w)
-
-
 
 #### Golang
 

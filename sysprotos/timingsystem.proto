@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+//go:generate protoc -I .\sysprotos\ --go_out=plugins=grpc:.\sysprotos .\sysprotos\timingsystem.proto
+package timingsystem;
+
+service TimingSystem {
+    rpc RecordTimingPoint (TimingSystemRequest) returns (TimingSystemResponse) {}
+}
+
+message TimingSystemRequest {
+    int32 id = 1;
+    enum FinishTypes {
+        FINISH_CORRIDOR = 0;
+        FINISH_LINE = 1;
+    }
+    FinishTypes type = 2;
+    string timePoint = 3;
+}
+
+message TimingSystemResponse {
+    bool resultStatus = 1;
+}

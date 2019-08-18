@@ -8,16 +8,65 @@ import (
 	pb "automatic-timing-system/sysprotos"
 
 	"google.golang.org/grpc"
+
+	"database/sql"
+	_ "github.com/mattn/go-sqlite3"
 )
 
 const (
 	port = ":50051"
 )
 
+type athleteInfo struct {
+	Id int,
+	StartNumber int
+}
+
+func getAthletes() (athletes map){
+	athletes := make(map[string]*atheleteInfo)
+	athletes["AthleteA"] = &atheleteInfo { Id = 1; StartNumber = 100 }
+	athletes["AthleteB"] = &atheleteInfo { Id = 2; StartNumber = 101 }
+	athletes["AthleteC"] = &atheleteInfo { Id = 3; StartNumber = 102 }
+	athletes["AthleteD"] = &atheleteInfo { Id = 4; StartNumber = 103 }
+	athletes["AthleteE"] = &atheleteInfo { Id = 5; StartNumber = 104 }
+	athletes["AthleteF"] = &atheleteInfo { Id = 6; StartNumber = 105 }
+	athletes["AthleteG"] = &atheleteInfo { Id = 7; StartNumber = 106 }
+	athletes["AthleteH"] = &atheleteInfo { Id = 8; StartNumber = 107 }
+	athletes["AthleteI"] = &atheleteInfo { Id = 9; StartNumber = 108 }
+	athletes["AthleteG"] = &atheleteInfo { Id = 10; StartNumber = 109 }
+}
+
 func initialDatabase() (result bool) {
-	log.Println("this is a function for initialing database")
+	os.Remove("sqlite3", "./atheletes.db")
+
+	db, err := sql.Open("sqlite3", "./athletes.db")
+	checkErr(err)
+	defer db.Close()
+
+	sqlStmt := `
+	create table athletes (
+		Id integer not null primary key, 
+		FullName text, 
+		StartNumber integer
+	);
+	delete from athletes;
+	`
+	_, err = db.Exec(sqlStmt)
+	checkErr(err)
+
+	insertSQL := "INSERT INTO athletes(Id, FullName, StartNumber) values(?, ?, ?)"
+	stmt, err := db.Prepare(insertSQL)
+	checkErr(err)
+	defer stmt.Close()
+
+	for key, value := range athletes {
+		_, err = stmt.Exec(value.Id, key, value.StartNumber)	
+		checkErr(err)
+	}
+
 	return true
 }
+
 
 // server is used to implement timingsystem.TimingSystemServer.
 type timingService struct{}
@@ -29,18 +78,16 @@ func (s *timingService) RecordTimingPoint(ctx context.Context, in *pb.TimingSyst
 }
 
 func main() {
-	initialDatabase()
+	// initialDatabase()
 
 	listen, err := net.Listen("tcp", port)
-	if err != nil {
-		log.Fatalf("failed to listen: %v", err)
-	}
+	checkErr(err)
+
 	s := grpc.NewServer()
 	pb.RegisterTimingSystemServer(s, &timingService{})
 
-	if err := s.Serve(listen); err != nil {
-		log.Fatalf("Failed to serve: %v", err)
-	}
+	err := s.Serve(listen);
+	checkErr(err)
 }
 
 func checkErr(err error) {

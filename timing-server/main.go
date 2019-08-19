@@ -4,8 +4,9 @@ import (
 	"context"
 	"log"
 	"net"
+	"os"
 
-	pb "automatic-timing-system/sysprotos"
+	pb "timingsystem/sysprotos"
 
 	"google.golang.org/grpc"
 
@@ -18,26 +19,30 @@ const (
 )
 
 type athleteInfo struct {
-	Id int,
+	ID          int
 	StartNumber int
 }
 
-func getAthletes() (athletes map){
-	athletes := make(map[string]*atheleteInfo)
-	athletes["AthleteA"] = &atheleteInfo { Id = 1; StartNumber = 100 }
-	athletes["AthleteB"] = &atheleteInfo { Id = 2; StartNumber = 101 }
-	athletes["AthleteC"] = &atheleteInfo { Id = 3; StartNumber = 102 }
-	athletes["AthleteD"] = &atheleteInfo { Id = 4; StartNumber = 103 }
-	athletes["AthleteE"] = &atheleteInfo { Id = 5; StartNumber = 104 }
-	athletes["AthleteF"] = &atheleteInfo { Id = 6; StartNumber = 105 }
-	athletes["AthleteG"] = &atheleteInfo { Id = 7; StartNumber = 106 }
-	athletes["AthleteH"] = &atheleteInfo { Id = 8; StartNumber = 107 }
-	athletes["AthleteI"] = &atheleteInfo { Id = 9; StartNumber = 108 }
-	athletes["AthleteG"] = &atheleteInfo { Id = 10; StartNumber = 109 }
+var finishCorridorContainer = make([]athleteInfo, 0)
+var finishLineContainer = make([]athleteInfo, 0)
+var athletes = make([]athleteInfo, 0)
+
+func initialAthletes() {
+
+	athletes = append(athletes, athleteInfo{ID: 1, StartNumber: 100})
+	athletes = append(athletes, athleteInfo{ID: 2, StartNumber: 101})
+	athletes = append(athletes, athleteInfo{ID: 3, StartNumber: 102})
+	athletes = append(athletes, athleteInfo{ID: 4, StartNumber: 103})
+	athletes = append(athletes, athleteInfo{ID: 5, StartNumber: 104})
+	athletes = append(athletes, athleteInfo{ID: 6, StartNumber: 105})
+	athletes = append(athletes, athleteInfo{ID: 7, StartNumber: 106})
+	athletes = append(athletes, athleteInfo{ID: 8, StartNumber: 107})
+	athletes = append(athletes, athleteInfo{ID: 9, StartNumber: 108})
+	athletes = append(athletes, athleteInfo{ID: 10, StartNumber: 109})
 }
 
 func initialDatabase() (result bool) {
-	os.Remove("sqlite3", "./atheletes.db")
+	os.Remove("./atheletes.db")
 
 	db, err := sql.Open("sqlite3", "./athletes.db")
 	checkErr(err)
@@ -59,12 +64,17 @@ func initialDatabase() (result bool) {
 	checkErr(err)
 	defer stmt.Close()
 
+	initialAthletes()
 	for key, value := range athletes {
-		_, err = stmt.Exec(value.Id, key, value.StartNumber)	
+		_, err = stmt.Exec(value.ID, key, value.StartNumber)
 		checkErr(err)
 	}
 
 	return true
+}
+
+func putDataIntoContainers(in *pb.TimingSystemRequest) {
+	
 }
 
 
@@ -73,7 +83,6 @@ type timingService struct{}
 
 func (s *timingService) RecordTimingPoint(ctx context.Context, in *pb.TimingSystemRequest) (*pb.TimingSystemResponse, error) {
 	log.Printf("Id: %v, Type: %v, TimePoint: %v", in.Id, in.Type, in.TimePoint)
-	TestIsAHaha()
 	return &pb.TimingSystemResponse{ResultStatus: true}, nil
 }
 
@@ -86,7 +95,7 @@ func main() {
 	s := grpc.NewServer()
 	pb.RegisterTimingSystemServer(s, &timingService{})
 
-	err := s.Serve(listen);
+	err = s.Serve(listen)
 	checkErr(err)
 }
 

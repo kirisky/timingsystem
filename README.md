@@ -12,8 +12,8 @@ According to the [requirement-1](./docs/requirements/Backend_take_home_test.pdf)
 - [ ] Documents
 
 *Timing Service*
-- [ ] Receives IDs of the athletes from Test-Client in Real-time
-- [ ] Receoves Types of the timing points
+- [ ] Receives IDs of the athletes from Test-Client
+- [ ] Receives Types of the timing points
 - [ ] Get athletes' full names by their IDs
 - [ ] Get athletes' start numbers by their IDs
 - [ ] Sends start numbers when the athlete enters the finish corridor

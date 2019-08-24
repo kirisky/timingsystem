@@ -1,9 +1,9 @@
-package main
+package websocket
 
 import (
 	"flag"
-	"log"
 	"net/http"
+	"log"
 )
 
 var addr = flag.String("addr", ":50051", "http service address")
@@ -23,23 +23,19 @@ func serveHome(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "home.html")
 }
 
-func main() {
+
+// StartServing starts websocket serving
+func StartServing() {
 	flag.Parse()
-	hub := newHub()
-	go hub.run()
+
 	http.HandleFunc("/", serveHome)
-	http.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) { 
-		serveWs(hub, w, r) 
+	http.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
+		serveWs()
 	})
-	
-	// serveWsl, err := net.Listen("tcp4", *addr)
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-	// log.Fatal(http.Serve(l, nil))
 
 	err := http.ListenAndServe(*addr, nil)
 	if err != nil {
 		log.Fatal("ListenAndServe:", err)
 	}
+	
 }

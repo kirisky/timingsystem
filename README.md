@@ -13,6 +13,9 @@
   * [Reference](#reference)  
 
 ## Picture of logic
+This is the logic of the project.
+<!-- ![Logic](./Docs/Images/DragonTrainers.svg) -->
+![Logic](./docs/imgs/TimingSystem-Flowchat.png)
 
 ## Usage (Tested on Linux)
 

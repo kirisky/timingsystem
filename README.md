@@ -8,6 +8,7 @@
   * [Screens](#screens)
   * [Background Of The Project](#background-of-the-project)  
   * [Tasks Description](#tasks-description)  
+  * [Package Requirements](#package-requirements)
   * [Directory Structure](#directory-structure)  
   * [Reference](#reference)  
 
@@ -106,17 +107,11 @@ According to the [requirement-1](./docs/requirements/Backend_take_home_test.pdf)
 
 
 ## Package Requirements
-
-*Database*
-- Sqlite
 - Go-SQLite3
-
-*Protocol*
 - gRPC
 - protoc
-
-*WebClient*
-- websocket
+- Gorilla WebSocket
+- GoDS (Go Data Structures)
 
 *Container*
 - docker

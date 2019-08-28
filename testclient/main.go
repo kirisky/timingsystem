@@ -5,7 +5,7 @@ import (
 	"log"
 	"time"
 
-	pb "timingsystem/sysprotos"
+	pb "timingsystem/timingserver/sysprotos"
 
 	"google.golang.org/grpc"
 )

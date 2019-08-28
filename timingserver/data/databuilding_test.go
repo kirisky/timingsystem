@@ -2,7 +2,7 @@ package data
 
 import (
 	"testing"
-	pb "timingsystem/sysprotos"
+	pb "timingsystem/timingserver/sysprotos"
 )
 
 func TestGetRecords(t *testing.T) {

@@ -8,7 +8,7 @@ import (
 	"sync"
 
 	"google.golang.org/grpc"
-	pb "timingsystem/sysprotos"
+	pb "timingsystem/timingserver/sysprotos"
 
 	"timingsystem/timingserver/data"
 	"timingsystem/timingserver/cerror"

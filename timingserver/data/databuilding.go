@@ -4,7 +4,7 @@ import (
 	"timingsystem/timingserver/cerror"
 	"log"
 
-	pb "timingsystem/sysprotos"
+	pb "timingsystem/timingserver/sysprotos"
 	"timingsystem/timingserver/utils"
 
 	"database/sql"
@@ -88,7 +88,7 @@ func GetRecords(id int, recordType pb.TimingSystemRequest_FinishTypes, timepoint
 
 // get a athlete information by the athleteID
 func getAthleteInfo(athleteID int) athleteInfo{
-	db, err := sql.Open("sqlite3", "../athletes.db")
+	db, err := sql.Open("sqlite3", "./athletes.db")
 	cerror.CheckErr(err)
 	defer db.Close()
 

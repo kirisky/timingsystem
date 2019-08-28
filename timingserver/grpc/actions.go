@@ -5,7 +5,7 @@ import (
 	"log"
 	"encoding/json"
 	
-	pb "timingsystem/sysprotos"
+	pb "timingsystem/timingserver/sysprotos"
 	"timingsystem/timingserver/hubs"
 
 	"timingsystem/timingserver/data"

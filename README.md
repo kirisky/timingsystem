@@ -19,7 +19,7 @@ This is the logic of the project.
 
 ## Usage (Tested on Linux)
 
-First of all, clone the project into your `$GOPATH`. Usually, it is in `/home/yourusername/go/src` in linux.
+First of all, clone the project into your `$GOPATH/src`. Usually, `$GOPATH` is in `/home/yourusername/go` in linux.
 After then, clone the project, like the following:
 ```go
 git clone https://github.com/kirisky/timingsystem.git

@@ -8,7 +8,10 @@ import (
 )
 
 
-
+// launch two goroutines
+// one for gRPC service
+// one for WebSocket service
+// serverHub as a broker for communicating between gRPC service and Websocket service
 func main() {
 	var wg sync.WaitGroup
 	wg.Add(2)

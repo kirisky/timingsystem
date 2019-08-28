@@ -15,7 +15,8 @@ import (
 	// "github.com/deckarep/golang-set"
 )
 
-
+// byTimePoint is a comparator for treeset
+// the order is ascending
 func byTimePoint(a, b interface{}) int {
 	athleteA := a.(athlete)
 	athleteB := b.(athlete)
@@ -85,7 +86,7 @@ func GetRecords(id int, recordType pb.TimingSystemRequest_FinishTypes, timepoint
 	return athleteRanking
 }
 
-
+// get a athlete information by the athleteID
 func getAthleteInfo(athleteID int) athleteInfo{
 	db, err := sql.Open("sqlite3", "../athletes.db")
 	cerror.CheckErr(err)
@@ -110,6 +111,7 @@ func getAthleteInfo(athleteID int) athleteInfo{
 
 }
 
+// merge FinishCorridorRecords and FinishLineRecords
 func mergeRecords() []athlete {
 	athleteRanking := make([]athlete, 0)
 

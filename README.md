@@ -3,7 +3,7 @@
 #### Table of Contents
 
 * [Timing System](#timing-system)   
-  * [Picture of logic](#picture-of-logic)  
+  * [Picture of Logic](#picture-of-logic)  
   * [Usage](#usage)  
   * [Screens](#screens)
   * [Background Of The Project](#background-of-the-project)  
@@ -12,14 +12,14 @@
   * [Directory Structure](#directory-structure)  
   * [Reference](#reference)  
 
-## Picture of logic
+## Picture of Logic
 This is the logic of the project.
 <!-- ![Logic](./Docs/Images/DragonTrainers.svg) -->
 ![Logic](./docs/imgs/TimingSystem-Flowchat.png)
 
 ## Usage (Tested on Linux)
 
-First of all, clone the project into your $GOPATH. Usually, it is in /home/yourusername/go/src in linux.
+First of all, clone the project into your `$GOPATH`. Usually, it is in `/home/yourusername/go/src` in linux.
 After then, clone the project, like the following:
 ```go
 git clone https://github.com/kirisky/timingsystem.git

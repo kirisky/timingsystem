@@ -1,5 +1,6 @@
 package data
 
+// athlete information
 type athlete struct {
 	ID int
 	FullName string

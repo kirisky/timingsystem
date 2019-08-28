@@ -10,7 +10,7 @@ import (
 )
 
 var athletes = make([]athleteInfo, 0)
-// InitialAthletesData Initial athleles data
+// InitialAthletesData initials athleles data
 func initialAthletesData() {
 	
 	athletes = append(athletes, athleteInfo{ ID: 1, StartNumber: 100, FullName: "AthleteA" })
@@ -25,7 +25,7 @@ func initialAthletesData() {
 	athletes = append(athletes, athleteInfo{ ID: 10, StartNumber: 109, FullName: "AthleteJ" })
 }
 
-// InitialDatabase insert the athletes data into database
+// InitialDatabase inserts the athletes data into database
 func InitialDatabase() bool {
 	os.Remove("../athletes.db")
 

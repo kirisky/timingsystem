@@ -23,6 +23,8 @@ type timingService struct{
 	serverHub *hubs.ServerHub
 }
 
+// RecordTimingPoint is a method from protobuf.
+// test-client will send dummy data to this service by this method
 func (s *timingService) RecordTimingPoint(ctx context.Context, in *pb.TimingSystemRequest) (*pb.TimingSystemResponse, error) {
 	log.Printf("Id: %v, Type: %v, TimePoint: %v", in.Id, in.Type, in.TimePoint)
 

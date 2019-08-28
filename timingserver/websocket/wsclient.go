@@ -25,7 +25,6 @@ const (
 
 var (
 	newline = []byte{'\n'}
-	space = []byte{' '}
 )
 
 var upgrader = websocket.Upgrader{
@@ -42,11 +41,9 @@ type WSClient struct {
 
 	// Buffered channel of outbound messages
 	send chan []byte
-
-	// Latest information about the athletes.
-	records []byte
 }
 
+// write message to websocket client
 func (w *WSClient) writeMessage() {
 	ticker := time.NewTicker(pingPeriod)
 	defer func() {
@@ -90,6 +87,7 @@ func (w *WSClient) writeMessage() {
 
 }
 
+// read message from websocket client
 func (w *WSClient) readMessage() {
 	defer func() {
 		log.Println("Unregister client")

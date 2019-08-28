@@ -11,6 +11,7 @@ import (
 	"timingsystem/timingserver/data"
 )
 
+// handleTheRequest gets the currect records and sends the records to websocket service
 func handleTheRequest(in *pb.TimingSystemRequest, serverHub *hubs.ServerHub) {
 
 	athletes := data.GetRecords(int(in.Id), in.Type, in.TimePoint)

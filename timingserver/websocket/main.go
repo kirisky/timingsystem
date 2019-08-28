@@ -13,6 +13,7 @@ var addr = flag.String("addr", ":50052", "websocket service address")
 
 var latestRecords = make([]byte, 0)
 
+// home page
 func serveHome(w http.ResponseWriter, r *http.Request) {
 	log.Println("URL:", r.URL)
 	if r.URL.Path != "/" {

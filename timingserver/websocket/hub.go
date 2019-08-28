@@ -22,6 +22,8 @@ type Hub struct {
 	latestRecords []byte
 }
 
+// register/unregister client
+// listen messages from gRPC service by channel and send the message to websocket clients
 func (h *Hub) run() {
 	for {
 		select {
@@ -48,6 +50,7 @@ func (h *Hub) run() {
 	}
 }
 
+// create a instance of Hub
 func newHub(serverHub *hubs.ServerHub) *Hub {
 	return &Hub {
 		broadcast: serverHub.MessagePipe,

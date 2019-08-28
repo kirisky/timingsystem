@@ -27,11 +27,11 @@ func initialAthletesData() {
 
 // InitialDatabase inserts the athletes data into database
 func InitialDatabase() bool {
-	os.Remove("../athletes.db")
+	os.Remove("./athletes.db")
 
 	initialAthletesData()
 
-	db, err := sql.Open("sqlite3", "../athletes.db")
+	db, err := sql.Open("sqlite3", "./athletes.db")
 	cerror.CheckErr(err)
 	defer db.Close()
 

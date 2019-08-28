@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Chat Example</title>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script type="text/javascript">
+
+var conn = null;
+
+function addRecord(item) {
+    records.appendChild(item)
+}
+
+
+function addInfoToStatusBar(info) {
+    var statusBar = document.getElementById("status-bar");
+
+    while (statusBar.childElementCount >= 3) {
+        statusBar.removeChild(statusBar.firstElementChild);
+    }
+    
+    var ele = document.createElement("div");
+    ele.className = "card-body";
+    ele.id = "status-content";
+    ele.innerHTML = info;
+    statusBar.appendChild(ele);
+}
+
+function initialWebSocket() {
+    if (conn != null) conn = null;
+    var records = document.getElementById("records");
+
+    if (window["WebSocket"]) {
+        conn = new WebSocket("ws://" + document.location.host + "/ws");
+
+        conn.onopen = function () {
+            records.innerHTML = "";
+            this.send("reconnect")
+            addInfoToStatusBar("Connected!");
+        };
+		
+        conn.onclose = function (evt) {
+            records.innerHTML = "";
+            var item = document.createElement("div");
+            addInfoToStatusBar("Connection closed!");
+        };
+
+        conn.onmessage = function (evt) {
+            records.innerHTML = "";
+
+            var head = document.createElement("tr")
+            head.innerHTML = "<th scope='col'>#</th><th scope='col'>ID</th><th scope='col'>FullName</th><th scope='col'>StartNumber</th><th scope='col'>Finish Corridor</th><th scope='col'>Finish Line</th>";
+            head.className = "thead-dark";
+            addRecord(head)
+
+            var obj = JSON.parse(evt.data)
+            for (const [key, record] of Object.entries(obj)) {
+                var rankNumber = parseInt(key) + 1;
+                var item = document.createElement("tr");
+                var content = "<td scople='row'>" + rankNumber + "</td>";
+                content += "<td>" + record.ID + "</td>";
+                content += "<td>" + record.FullName + "</td>";
+                content += "<td>" + record.StartNumber + "</td>";
+                content += "<td>" + record.FinishCorridorTime + "</td>";
+                content += "<td>" + record.FinishLineTime + "</td>";
+                item.innerHTML = content;
+                addRecord(item);
+            };
+            console.log(obj);
+        }; 
+
+    } else {
+        var item = document.createElement("div");
+        addInfoToStatusBar("Your browser does not support Websockets.");
+    }
+}
+
+
+var timeoutID = null;
+document.addEventListener("visibilitychange", function() {
+    var statusBar = document.getElementById("status-bar")
+
+    if (document.visibilityState === "visible") {
+        addInfoToStatusBar("The tab is visible now!");
+
+        if (conn.readyState == WebSocket.CLOSED) {
+            initialWebSocket();
+        } else if (timeoutID != null){
+            console.log("clear timeout: " + timeoutID);
+            window.clearTimeout(timeoutID)
+            timeoutID = null;
+        }
+    }
+    
+    if (document.visibilityState === "hidden") {
+        // console.log("is not visible")
+        addInfoToStatusBar("The tab is hidden now!");
+        timeoutID = window.setTimeout(function() {
+            addInfoToStatusBar("Closing the connection!")
+            conn.close();
+        }, 5000);
+        
+        // console.log("timeoutID: " + timeoutID);
+    }
+});
+
+window.onload = function () {
+    initialWebSocket()
+};
+
+</script>
+<style type="text/css">
+html {
+    overflow: hidden;
+}
+body {
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#records-wrapper {
+    width: 800px;
+    height: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    border: 1px solid black;
+    box-shadow: 15px 10px 20px 3px #afa7a7;
+
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+}
+
+#status-bar {
+    width: 800px;
+    height: 100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#status-content {
+    padding: 0px;
+    margin: 4px 15px;
+}
+
+
+</style>
+</head>
+<body>
+<div id="records-wrapper">
+    <table id="records" class="table"></table>
+</div>
+<div id="status-bar" class="card"></div>
+</body>
+</html>

@@ -2,7 +2,7 @@ package utils
 
 import (
 	"time"
-	"timingsystem/cerror"
+	"timingsystem/timingserver/cerror"
 )
 
 // IsEmptyString check if the string is empty or not

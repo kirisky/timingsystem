@@ -6,7 +6,7 @@ import (
 	
 	// import go-sqlite3 driver
 	_ "github.com/mattn/go-sqlite3"
-	"timingsystem/cerror"
+	"timingsystem/timingserver/cerror"
 )
 
 var athletes = make([]athleteInfo, 0)

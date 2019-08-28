@@ -1,21 +1,26 @@
 package grpc
 
 import (
+	"timingsystem/timingserver/cerror"
 	"log"
+	"encoding/json"
 	
 	pb "timingsystem/sysprotos"
+	"timingsystem/timingserver/hubs"
 
-	"timingsystem/data"
+	"timingsystem/timingserver/data"
 )
 
-func handleTheRequest(in *pb.TimingSystemRequest) {
+func handleTheRequest(in *pb.TimingSystemRequest, serverHub *hubs.ServerHub) {
 
 	athletes := data.GetRecords(int(in.Id), in.Type, in.TimePoint)
 	if len(athletes) == 0 {
 		log.Fatal("Get records failed!")
 	}
+	log.Println("Athletes Size:", len(athletes))
 
-	for key, val := range athletes {
-		log.Println(key, val.ID, val.FullName, val.StartNumber, val.FinishCorridorTime, val.FinishLineTime)	
-	}
+	athletesJSON, err := json.Marshal(athletes)
+	cerror.CheckErr(err)
+
+	serverHub.MessagePipe <- athletesJSON
 }

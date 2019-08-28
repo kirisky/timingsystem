@@ -1,11 +1,11 @@
 package data
 
 import (
-	"timingsystem/cerror"
+	"timingsystem/timingserver/cerror"
 	"log"
 
 	pb "timingsystem/sysprotos"
-	"timingsystem/utils"
+	"timingsystem/timingserver/utils"
 
 	"database/sql"
 	// import go-sqlite3 driver
@@ -56,17 +56,28 @@ func GetRecords(id int, recordType pb.TimingSystemRequest_FinishTypes, timepoint
 
 	switch recordType {
 	case pb.TimingSystemRequest_FINISH_CORRIDOR:
-		insertFinishCorridor(id, timepoint, sportsmanInfo)
+		finishCorridorRecords.Add(athlete{
+			ID: id,
+			FinishCorridorTime: timepoint,
+			FinishLineTime: "",
+			FullName: sportsmanInfo.FullName,
+			StartNumber: sportsmanInfo.StartNumber,
+		})
 
 	case pb.TimingSystemRequest_FINISH_LINE:
-		insertFinishLine(id, timepoint)
+		finishLineRecords.Add(athlete{
+			ID: id,
+			FinishCorridorTime: "",
+			FinishLineTime: timepoint,
+			FullName: sportsmanInfo.FullName,
+			StartNumber: sportsmanInfo.StartNumber,
+		})
 	
 	default:
 		log.Fatalf("The finish type is wrong!")
 	}
 
 	athleteRanking := mergeRecords()
-	log.Printf("athleteRanking size is [%v]", len(athleteRanking))
 
 	if len(athleteRanking) == 0 {
 		log.Fatalf("merge finishline and finishcorridor failed")
@@ -99,35 +110,26 @@ func getAthleteInfo(athleteID int) athleteInfo{
 
 }
 
-func insertFinishCorridor(id int, timepoint string, sportsmanInfo athleteInfo) {
-	finishCorridorRecords.Add(athlete{
-		ID: id,
-		FinishCorridorTime: timepoint,
-		FullName: sportsmanInfo.FullName,
-		StartNumber: sportsmanInfo.StartNumber,
-	})
-}
-
-func insertFinishLine(id int, timepoint string) {
-	finishLineRecords.Add(athlete{
-		ID: id,
-		FinishLineTime: timepoint,
-	})
-}
-
 func mergeRecords() []athlete {
-
 	athleteRanking := make([]athlete, 0)
 
-	// merge the records of finishline into the athlete ranking
-	it := finishLineRecords.Iterator()
+	// make a copy of FinishCorridorRecords
+	fcRecords := treeset.NewWith(byTimePoint)
+	it := finishCorridorRecords.Iterator()
 	for it.Next() {
+		fcRecords.Add(it.Value())
+	}
+
+	// merge the records of finishline into the athlete ranking
+	it = finishLineRecords.Iterator()
+	for it.Next() {
+
 		_, v := it.Index(), it.Value()
 		sportsman := v.(athlete)
-		
-		key, theMan := finishCorridorRecords.Find(func (index int, elm interface{} ) bool {
-			v := elm.(athlete)
-			return v.ID == sportsman.ID
+
+		_, theMan := finishCorridorRecords.Find(func (index int, elm interface{}) bool {
+			r := elm.(athlete)
+			return r.ID == sportsman.ID
 		})
 
 		if theMan == nil {
@@ -139,14 +141,14 @@ func mergeRecords() []athlete {
 		sportsman.FullName = info.FullName
 		sportsman.StartNumber = info.StartNumber
 
-		finishCorridorRecords.Remove(key)
+		fcRecords.Remove(theMan)
 
 		athleteRanking = append(athleteRanking, sportsman)
 	}
 
 	// merge the records of the finishcorridor into the athlete ranking
-	if finishCorridorRecords.Size() != 0 {
-		it = finishCorridorRecords.Iterator()
+	if fcRecords.Size() != 0 {
+		it = fcRecords.Iterator()
 		for it.Next() {
 			_, v := it.Index(), it.Value()
 			sportsman := v.(athlete)
@@ -156,5 +158,6 @@ func mergeRecords() []athlete {
 	}
 
 	return athleteRanking
-	
 }
+
+

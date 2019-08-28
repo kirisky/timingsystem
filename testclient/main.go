@@ -1,7 +1,6 @@
 package main
 
 import (
-	"timingsystem/cerror"
 	"context"
 	"log"
 	"time"
@@ -17,16 +16,20 @@ const (
 
 func sendRequests(client pb.TimingSystemClient) {
 	data := getFakeData()
+	seconds := time.Duration(len(data) * 3)
 
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), seconds * time.Second)
 	defer cancel()
 
 	log.Println("start sending data now!")
 
 	for _, req := range data {
 		time.Sleep(2 * time.Second)
+		log.Printf("req: [%v]", req)
 		r, err := client.RecordTimingPoint(ctx, req)
-		cerror.CheckErr(err)
+		if err != nil {
+			log.Fatalln("Calling RecordTimePoint is failed: ", err)
+		}
 		log.Printf("Result of Sending data[%v]: %v", req.Id, r.ResultStatus)
 	}
 
@@ -35,7 +38,9 @@ func sendRequests(client pb.TimingSystemClient) {
 
 func main() {
 	conn, err := grpc.Dial(address, grpc.WithInsecure())
-	cerror.CheckErr(err)
+	if err != nil {
+		log.Fatalln("Dial gRPC is failed: ", err)
+	}
 	defer conn.Close()
 
 	client := pb.NewTimingSystemClient(conn)

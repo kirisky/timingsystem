@@ -1,69 +1,111 @@
-# Automatic Timing System
+# Timing System
 
+#### Table of Contents
 
-## Analysing Logic of the Business
+* [Timing System](#timing-system)   
+  * [Picture of logic](#picture-of-logic)  
+  * [Usage](#usage)  
+  * [Screens](#screens)
+  * [Background Of The Project](#background-of-the-project)  
+  * [Tasks Description](#tasks-description)  
+  * [Directory Structure](#directory-structure)  
+  * [Reference](#reference)  
+
+## Picture of logic
+
+## Usage (Tested on Linux)
+
+First of all, clone the project into your $GOPATH. Usually, it is in /home/yourusername/go/src in linux.
+After then, clone the project, like the following:
+```go
+git clone https://github.com/kirisky/timingsystem.git
+```
+now, you can start to test the project.
+
+#### Start Timing Server
+Run the following command:
+```go
+go run timingserver/main.go
+```
+
+#### Open Websocket client
+open your browser, input the following address to your browser an open the web-end. This is a websocket client and it will connect server automatically.
+
+if you run the project on your Desktop, please input:
+```go
+localhost:50052
+```
+
+if you run the project on your virtual machine, please input:
+```go
+IpOfYourVM:50052
+```
+
+####  Send Dummy Data
+Enter `testclient` folder, and then run command:
+```go
+go run testclient/*.go
+```
+
+## Screens
+
+After lunched server, open browser and connect the server.              
+![Logic](./docs/imgs/Connected.png)         
+
+If you switch to other browser tab or make your browser into background within 5 seconds, the connection won't be disrupted.            
+![Logic](./docs/imgs/SwitchBrowser.png)     
+
+If you switch to other browser tab or make your browser into background over 5 seconds, the connection will be disrupted.           
+When you switch the browser tab back or make your browser into foreground, the connection will be reconnected.              
+![Logic](./docs/imgs/Reconnected.png)
+
+When you start timing server, open the websocket client on your browser, and run the test-client to send dummy data to server, you will see the following sences:              
+ 
+Accepted finish corridor records.             
+![Logic](./docs/imgs/AcceptData-1.png)
+![Logic](./docs/imgs/AcceptData-2.png)
+
+Accepted finish line records. And the records are in the correct order.                            
+![Logic](./docs/imgs/AcceptData-3.png)
+![Logic](./docs/imgs/AcceptData-4.png)
+
+The final records.                 
+![Logic](./docs/imgs/Result.png)
+
+## Background of The Project
 According to the [requirement-1](./docs/requirements/Backend_take_home_test.pdf) and [requirements-2](./docs/requirements/Requirements_of_the_task.png), summarized the following tasks:
 
-#### Tasks
-*Protocol between Timing Service and Test-Client*
-- [ ] Type of the timing point which is finish corridor or finish line
-- [ ] The IDs of the athletes
-- [ ] Timing point and the precision of it is to second
-- [ ] Documents
+## Tasks Description
+*First Task*
+- [x] Server/service, that receives the timing information in real-time. Protocol is not known at the moment - just design it yourself in the way you wish it. You can’t use the real timing system for testing - create a test-client that sends some dummy data instead.
 
-*Timing Service*
-- [ ] Receives IDs of the athletes from Test-Client
-- [ ] Receives Types of the timing points
-- [ ] Get athletes' full names by their IDs
-- [ ] Get athletes' start numbers by their IDs
-- [ ] Sends start numbers when the athlete enters the finish corridor
-- [ ] Sends full names when the athlete crosses the finish line
-- [ ] Sends the finish time when the athlete crosses the finish line
-- [ ] Database
-    - [ ] IDs of the athletes
-    - [ ] Start numbers of the athletes
-    - [ ] Full name of the athletes
-- [ ] Documents
+*Second Task*
+- [x] When athlete enters the finish corridor, a corresponding row is added to the table, where the athlete’s start number and name is displayed.
 
+- [x] When the athlete crosses the finish line, the finish time is added to the athlete’s row.
 
-*Test-Client*  
-- [ ] Sends data of the athletes' time points of finish corridor and finish line
-- [ ] Sends data of the athletes' IDs
-- [ ] Documents
+- [x] Design the UI in the way, that the athlete’s who entered to the finish corridor last, would be visible to the user without any effort from the user - the older rows records just move out of the visible area, sequentially.
 
+- [x] Demonstrate the functioning of the system with the test-client that sends the dummy data.
 
-*Web-Client*
-- [ ] Add a new row with SmartNumber and Name in the table form when the athlete enters the finish corridor
-- [ ] Displays the finish time in the athlete's row of the table when the athlete crosses the finish line
-- [ ] Only displays the latest record for each athlete? Need to confirm!
-- [ ] Displays data without refreshing browser
-- [ ] Documents
+- [x] Try to design the user interface in the way, that user don’t have to put any effort or do any additional moves in order to see something (for example, no need to “refresh” or scroll the page or do any other annoyances), so that he/she would understand adequately what is happening and won’t get confused.
 
-#### Extra Tasks
-- [ ] Reorder the data when generated the time point of the finish line.
-- [ ] The Web-Client should stop to communicate with server, when the window of the browser is in the backgorund.
-- [ ] The Web-Client should resume connection with the server and communite with it, when the window of the browser is in the foreground.
-- [ ] Proving a loading animation to solve the problem that the data will display incorrect for a while when the browser window become actived from deactivated.
+*Extra Tasks*
+- [x] Make sure that the athletes who cross the finish-line would be displayed in the correct order - for example, if athlete A enters the finish corridor before athlete B, then they are displayed in the order of entering the corridor. But if athlete B passes the athlete A in the finish corridor (i.e. the athlete B crosses the finish line before the athlete A), then adjust the displayed order accordingly. Demonstrate it with the dummy test-client.
 
-#### Bonus Tasks
+- [x] Do so that the web user interface would interact with the server in real-time only, when the browser window is in foreground / active. If user brings some other application window into foreground, then the web user interface has to stop the communication with the server. I the user activates the web browser window again, the realtime communication with the server must be resumed.
+
+- [x]  If the browser window has been deactivated meantime and the user brings it to foreground again, then, depending on the technical solution, there might be situation where there is a “gap” in the information that has been received from the server (because the communication with the server didn’t happen and the information was not sent). In that case, think / propose, how it could be handled in the user interface so, that user would understand it adequately and won’t get confused.
+
+*Bonus Tasks*
 - [ ] Docker Compose File
 
+*Documents*
+- [x] For Timing Server
+- [x] For gRPC
 
-## Choice of the libraries
 
-*Relevance to Go*
-- gopkgs
-- gocode
-- gopkgs
-- go-outline
-- go-symbols
-- guru
-- gorename
-- dlv
-- gocode-gomod
-- godef
-- goreturns
-- golint
+## Package Requirements
 
 *Database*
 - Sqlite
@@ -75,15 +117,77 @@ According to the [requirement-1](./docs/requirements/Backend_take_home_test.pdf)
 
 *WebClient*
 - websocket
-- [Loading.Io](https://loading.io)
 
 *Container*
 - docker
 
 
+## Directory Structure
 
-## Parts of the project
+```go
+├── sysprotos
+│   ├── timingsystem.pb.go
+│   └── timingsystem.proto
+├── testclient
+│   ├── fakedata.go
+│   └── main.go
+└── timingserver
+    ├── cerror
+    │   └── error.go
+    ├── data
+    │   ├── databuilding.go
+    │   ├── databuilding_test.go
+    │   ├── dataInitializaion_test.go
+    │   ├── dataInitialization.go
+    │   └── datastructs.go
+    ├── grpc
+    │   ├── actions.go
+    │   └── main.go
+    ├── hubs
+    │   └── serverhub.go
+    ├── main.go
+    ├── utils
+    │   └── tools.go
+    └── websocket
+        ├── home.html
+        ├── hub.go
+        ├── main.go
+        └── wsclient.go
+```
 
+### timingserver
+- `main.go` for starting the timing server
+
+#### grpc
+- `main.go` for starting gRPC server. The file defines RecordTimingPoint method for timingService from gRPC protocal.
+- `actions.go`  defines logic for getting records with correct order. And then, send the data to websocket server.
+
+### websocket
+- `main.go` for starting websocket server.
+- `hub.go` for registering/unregistering websocket clients. And as a broker for broadcasting message from gRPC server to websocket clients and maintain the a copy of the latest records.
+- `wesclient.go` defines logics for websocket service. 
+- `home.html` defines a template for websocket client. It includes front-end logic of websocket client.
+
+#### data
+- `databuilding.go` defines logics for sorting the order of the records
+- `dataInitialization.go` defines logics for initializing database. In this project, the database is SQLite.
+- `datastructs.go` defines two data structures that are Athletes and athleteInfo. The former one is for storing records. The latter one is for storing data from database.
+
+#### hubs
+- `serverhub.go` defines a hub for communicating between gRPC service and WebSocket service.
+
+#### utils
+- `tools.go` defines some utility functions.
+
+#### cerror
+- `cerror.go` defines a function for output error information.
+
+### sysprotos
+- `timingsystem.proto` defines a protocol for accepting dummy data from test-client
+
+### testclient
+- `fakedata.go` defines dummy data.
+- `main.go` sends dummy data to the gRPC service.
 
 ## References
 
@@ -100,5 +204,4 @@ According to the [requirement-1](./docs/requirements/Backend_take_home_test.pdf)
 - [Go database/sql tutorial](http://go-database-sql.org/index.html)
 - [SQLDrivers - Wiki of Go in the Github](https://github.com/golang/go/wiki/SQLDrivers)
 - [SQL Interface - Wiki of Go in the Github](https://github.com/golang/go/wiki/SQLInterface)
-- [Golang, ORMs, and why I am still not using one](http://www.hydrogen18.com/blog/golang-orms-and-why-im-still-not-using-one.html)
 

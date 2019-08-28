@@ -8,11 +8,11 @@ type athlete struct {
 	FinishLineTime string
 }
 
+// Athletes is a set of athlete
+type Athletes []athlete
+
 type athleteInfo struct {
 	ID int
 	StartNumber int
 	FullName string
 }
-
-// Athletes is a set of athlete
-type Athletes []athlete

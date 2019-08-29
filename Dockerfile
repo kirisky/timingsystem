@@ -1,3 +1,5 @@
+# Please don't use the Dockerfile, becuase it has dependencise problem
+
 FROM golang:latest
 
 WORKDIR $GOPATH/src/timingsystem/timingserver

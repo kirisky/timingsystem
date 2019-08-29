@@ -27,7 +27,7 @@ git clone https://github.com/kirisky/timingsystem.git
 now, you can start to test the project.
 
 #### Start Timing Server
-Run the following command:
+Enter the `timingserver` folder, and run the following command:
 ```go
 go run timingserver/main.go
 ```

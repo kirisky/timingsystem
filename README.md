@@ -1,5 +1,7 @@
 # Timing System
 
+*Note: It does not support docker yet.*
+
 #### Table of Contents
 
 * [Timing System](#timing-system)   

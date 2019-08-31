@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+//go:generate protoc -I .\sysprotos\ --go_out=plugins=grpc:.\sysprotos .\sysprotos\timingsystem.proto
+package timingsystem;
+
+service TimingSystem {
+    // The method sends timepoint and athlete info to timing server
+    rpc RecordTimingPoint (TimingSystemRequest) returns (TimingSystemResponse) {}
+}
+
+message TimingSystemRequest {
+    // Athlete's ID
+    int32 id = 1;
+    enum FinishTypes {
+        FINISH_CORRIDOR = 0;
+        FINISH_LINE = 1;
+    }
+    // The field means finish corridor or finish line
+    FinishTypes type = 2;
+    // The time represents timepoint that athlete enters finish corridor or finish line
+    string timePoint = 3;
+}
+
+// False means involving RecordTimingPoint method failed 
+message TimingSystemResponse {
+    bool resultStatus = 1;
+}

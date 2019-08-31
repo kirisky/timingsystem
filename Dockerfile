@@ -1,16 +1,10 @@
-# Please don't use the Dockerfile, becuase it has dependencise problem
-
 FROM golang:latest
 
-WORKDIR $GOPATH/src/timingsystem/timingserver
+WORKDIR /services/src/timingsystem/timingserver
 
-COPY timingserver $GOPATH/src/timingsystem/timingserver
-COPY sysprotos $GOPATH/src/timingsystem/sysprotos
-COPY github.com/gorilla/websocket $GOPATH/src/github.com/gorilla/websocket
-COPY github.com/emirpasic/gods/sets/treeset $GOPATH/src/github.com/emirpasic/gods/sets/treeset
-COPY github.com/mattn/go-sqlite3 $GOPATH/src/github.com/mattn/go-sqlite3
-COPY google.golang.org/grpc $GOPATH/src/google.golang.org/grpc
-RUN go build .
+COPY timingserver /services/src/timingsystem/timingserver
+
+RUN go build -mod=vendor .
 
 EXPOSE 50052
 ENTRYPOINT ["./timingserver"]

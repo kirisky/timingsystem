@@ -1,7 +1,7 @@
 package main
 
 import (
-	pb "timingsystem/timingserver/sysprotos"
+	pb "timingsystem/testclient/timingsystem"
 )
 
 type fakedata []*pb.TimingSystemRequest

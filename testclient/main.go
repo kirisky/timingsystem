@@ -4,6 +4,7 @@ import (
 	"context"
 	"log"
 	"time"
+	"flag"
 
 	pb "timingsystem/testclient/timingsystem"
 
@@ -11,8 +12,11 @@ import (
 )
 
 const (
-	address = "127.0.0.1:50051"
+	// address = "127.0.0.1:50051"
+	// address = "35.228.42.74:50051"
 )
+
+var addr = flag.String("addr", ":50051", "gRPC service address")
 
 func sendRequests(client pb.TimingSystemClient) {
 	data := getFakeData()
@@ -37,16 +41,15 @@ func sendRequests(client pb.TimingSystemClient) {
 }
 
 func main() {
-	conn, err := grpc.Dial(address, grpc.WithInsecure())
+	flag.Parse()
+
+	conn, err := grpc.Dial(*addr, grpc.WithInsecure())
 	if err != nil {
 		log.Fatalln("Dial gRPC is failed: ", err)
 	}
 	defer conn.Close()
 
 	client := pb.NewTimingSystemClient(conn)
-
-	// ctx, cancel := context.WithTimeout(context.Background(), time.Second)
-	// defer cancel()
 
 	log.Println("Start sending requests")
 	sendRequests(client)

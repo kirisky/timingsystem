@@ -47,7 +47,7 @@ if you run the project on your `virtual machine`, please input:
 ```go
 IpOfYourVM:50052
 ```
-or if you want to see a `demo`, please input the following address into your browser:
+or if you want to see a `demo timing system service`, please input the following address into your browser:
 ```go
 // It is a docker image of timing server.
 // And it run on Google Cloud Platform
@@ -59,13 +59,17 @@ Enter `testclient` folder, and then run command:
 ```go
 // Build the test client with go modules.
 // Send the dummy data to my docker image of the project on Google Cloud
-go build && ./testclient -addr 35.228.42.74:50051
+go build && ./testclient
 ```
 or  
 ```go
 // In $GOPATH/src
 // Send the dummy data to the local timing service
 go run testclient/*.go
+```
+or if you want to send the dummy data to the `demo timing system service`, please send the data to the following address:   
+```go
+go build && ./testclient -addr 35.228.42.74:50051
 ```
 
 ## Docker

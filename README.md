@@ -43,14 +43,20 @@ go run timingserver/main.go
 #### Open Websocket client
 open your browser, input the following address to your browser an open the web-end. This is a websocket client and it will connect server automatically.
 
-if you run the project on your Desktop, please input:
+if you run the project locally, please input:
 ```go
 localhost:50052
 ```
 
-if you run the project on your virtual machine, please input:
+if you run the project on your `virtual machine`, please input:
 ```go
 IpOfYourVM:50052
+```
+or if you want to see a `demo`, please input the following address into your browser:
+```go
+// It is a docker image of timing server.
+// And it run on Google Cloud Platform
+http://35.228.42.74:50052/
 ```
 
 ####  Send Dummy Data
@@ -67,11 +73,10 @@ go run testclient/*.go
 
 ## Docker
 The project supports docker with `Dockerfile`.            
-For example, you can use the following command to build the image on Google Cloud.
+For example, you can use the following command to build the project as a docker image on your Google Cloud.
 ```bash   
 gcloud builds submit --tag gcr.io/The Id of your project on the GoogleCloud/timingsystem-image
 ```
-
 
 ## Screens
 

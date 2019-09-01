@@ -1,12 +1,14 @@
 # Timing System
 
-*Note: It does not support docker yet.*
+~~*Note: It does not support docker yet.*~~   
+*Note: It supports docker .*
 
 #### Table of Contents
 
 * [Timing System](#timing-system)   
   * [Picture of Logic](#picture-of-logic)  
   * [Usage](#usage)  
+  * [Docker](#docker)
   * [Screens](#screens)
   * [Background Of The Project](#background-of-the-project)  
   * [Tasks Description](#tasks-description)  
@@ -31,6 +33,10 @@ now, you can start to test the project.
 #### Start Timing Server
 Enter the `timingserver` folder, and run the following command:
 ```go
+go build && ./timingserver
+```
+
+```go
 go run timingserver/main.go
 ```
 
@@ -50,8 +56,22 @@ IpOfYourVM:50052
 ####  Send Dummy Data
 Enter `testclient` folder, and then run command:
 ```go
+// Send the dummy data to my docker image of the project on Google Cloud
+go build && ./testclient -addr 35.228.42.74:50051
+```
+or  
+```go
+// Send the dummy data to the local timing service
 go run testclient/*.go
 ```
+
+## Docker
+The project supports docker with `Dockerfile`.            
+For example, you can use the following command to build the image on Google Cloud.
+```bash   
+gcloud builds submit --tag gcr.io/The Id of your project on the GoogleCloud/timingsystem-image
+```
+
 
 ## Screens
 
@@ -204,4 +224,5 @@ According to the [requirement-1](./docs/requirements/Backend_take_home_test.pdf)
 - [Go database/sql tutorial](http://go-database-sql.org/index.html)
 - [SQLDrivers - Wiki of Go in the Github](https://github.com/golang/go/wiki/SQLDrivers)
 - [SQL Interface - Wiki of Go in the Github](https://github.com/golang/go/wiki/SQLInterface)
+- [Quickstart Docker](https://cloud.google.com/cloud-build/docs/quickstart-docker)
 

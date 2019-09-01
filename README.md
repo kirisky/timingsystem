@@ -35,7 +35,7 @@ Enter the `timingserver` folder, and run the following command:
 ```go
 go build && ./timingserver
 ```
-
+or
 ```go
 go run timingserver/main.go
 ```

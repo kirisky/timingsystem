@@ -125,7 +125,7 @@ According to the [requirement-1](./docs/requirements/Backend_take_home_test.pdf)
 - [x]  If the browser window has been deactivated meantime and the user brings it to foreground again, then, depending on the technical solution, there might be situation where there is a “gap” in the information that has been received from the server (because the communication with the server didn’t happen and the information was not sent). In that case, think / propose, how it could be handled in the user interface so, that user would understand it adequately and won’t get confused.
 
 *Bonus Tasks*
-- [ ] Docker Compose File
+- [x] Docker Compose File
 
 *Documents*
 - [x] For Timing Server

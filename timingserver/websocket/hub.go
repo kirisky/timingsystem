@@ -20,9 +20,6 @@ type Hub struct {
 
 	// latest records
 	latestRecords []byte
-
-	// Reset the latestRecords
-	resetLatestRecords chan bool
 }
 
 // register/unregister client
@@ -49,13 +46,12 @@ func (h *Hub) run() {
 					delete(h.clients, client)
 				}
 			}
-
-		case toRest := <-h.resetLatestRecords:
-			if toRest {
-				h.latestRecords = make([]byte, 0)
-			}
 		}
+
+
 	}
+
+
 }
 
 // create a instance of Hub
@@ -65,7 +61,5 @@ func newHub(serverHub *hubs.ServerHub) *Hub {
 		register: make(chan *WSClient),
 		unregister: make(chan *WSClient),
 		clients: make(map[*WSClient]bool),
-		resetLatestRecords: make(chan bool, 0),
-
 	}
 }

@@ -116,11 +116,6 @@ func (w *WSClient) readMessage() {
 			w.send <- w.wsHub.latestRecords
 		}
 
-		if string(message) == "resetrecords" {
-			log.Println("Reset the records.")
-			w.wsHub.resetLatestRecords <- true
-		}
-
 	}
 
 	log.Println("finish the message reading")

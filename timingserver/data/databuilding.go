@@ -12,7 +12,6 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 
 	"github.com/emirpasic/gods/sets/treeset"
-	// "github.com/deckarep/golang-set"
 )
 
 // byTimePoint is a comparator for treeset
@@ -57,6 +56,16 @@ func GetRecords(id int, recordType pb.TimingSystemRequest_FinishTypes, timepoint
 
 	switch recordType {
 	case pb.TimingSystemRequest_FINISH_CORRIDOR:
+		if finishCorridorRecords.Size() == 10 {
+			log.Println("Size of FinishCorridorRecords:", finishCorridorRecords.Size())
+			finishCorridorRecords.Clear()
+			log.Println("Cleared! Size of FinishCorridorRecords:", finishCorridorRecords.Size())
+
+			log.Println("Size of FinishLineRecords:", finishLineRecords.Size())
+			finishLineRecords.Clear()
+			log.Println("Cleared! Size of FinishLineRecords:", finishLineRecords.Size())
+		}
+
 		finishCorridorRecords.Add(athlete{
 			ID: id,
 			FinishCorridorTime: timepoint,

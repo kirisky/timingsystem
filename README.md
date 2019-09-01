@@ -49,8 +49,7 @@ IpOfYourVM:50052
 ```
 or if you want to see a `demo timing system service`, please input the following address into your browser:
 ```go
-// It is a docker image of timing server.
-// And it run on Google Cloud Platform
+// This demo is a docker image of timing server which runs on Google Cloud Platform
 http://35.228.42.74:50052/
 ```
 

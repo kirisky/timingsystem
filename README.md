@@ -23,20 +23,15 @@ This is the logic of the project.
 
 ## Usage (Tested on Linux)
 
-First of all, clone the project into your `$GOPATH/src`. Usually, `$GOPATH` is in `/home/yourusername/go` in linux.
-After then, clone the project, like the following:
-```go
-git clone https://github.com/kirisky/timingsystem.git
-```
-now, you can start to test the project.
-
 #### Start Timing Server
 Enter the `timingserver` folder, and run the following command:
 ```go
+// Build the project with go modules.
 go build && ./timingserver
 ```
 or
 ```go
+// In $GOPATH/src
 go run timingserver/main.go
 ```
 
@@ -62,11 +57,13 @@ http://35.228.42.74:50052/
 ####  Send Dummy Data
 Enter `testclient` folder, and then run command:
 ```go
+// Build the test client with go modules.
 // Send the dummy data to my docker image of the project on Google Cloud
 go build && ./testclient -addr 35.228.42.74:50051
 ```
 or  
 ```go
+// In $GOPATH/src
 // Send the dummy data to the local timing service
 go run testclient/*.go
 ```

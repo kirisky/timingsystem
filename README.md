@@ -85,18 +85,16 @@ If you switch to other browser tab or make your browser into background within 5
 
 If you switch to other browser tab or make your browser into background over 5 seconds, the connection will be disrupted.           
 When you switch the browser tab back or make your browser into foreground, the connection will be reconnected.    
-  
+
 ![Logic](./docs/imgs/Reconnected.png)
 
-When you start timing server, open the websocket client on your browser, and run the test-client to send dummy data to server, you will see the following sences:              
+When you start timing server, open the websocket client on your browser, and run the test-client to send dummy data to server, you will see the following scenes:              
  
-Accepted finish corridor records.             
 ![Logic](./docs/imgs/AcceptData-1.png)
+
 ![Logic](./docs/imgs/AcceptData-2.png)
 
-Accepted finish line records. And the records are in the correct order.                            
 ![Logic](./docs/imgs/AcceptData-3.png)
-![Logic](./docs/imgs/AcceptData-4.png)
 
 The final records.                 
 ![Logic](./docs/imgs/Result.png)

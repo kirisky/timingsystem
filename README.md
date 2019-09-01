@@ -224,5 +224,5 @@ According to the [requirement-1](./docs/requirements/Backend_take_home_test.pdf)
 - [Go database/sql tutorial](http://go-database-sql.org/index.html)
 - [SQLDrivers - Wiki of Go in the Github](https://github.com/golang/go/wiki/SQLDrivers)
 - [SQL Interface - Wiki of Go in the Github](https://github.com/golang/go/wiki/SQLInterface)
-- [Quickstart Docker](https://cloud.google.com/cloud-build/docs/quickstart-docker)
+- [Quickstart Docker on Google Cloud Platform](https://cloud.google.com/cloud-build/docs/quickstart-docker)
 

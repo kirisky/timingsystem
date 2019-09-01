@@ -1,2 +1,4 @@
 helloworld
 *.db
+testclient/testclient
+timingserver/timingserver

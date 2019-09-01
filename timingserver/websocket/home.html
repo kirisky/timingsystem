@@ -26,6 +26,27 @@ function addInfoToStatusBar(info) {
     statusBar.appendChild(ele);
 }
 
+function bindResetRecord() {
+    var button = document.getElementById("reset-records");
+    button.addEventListener("click", function() {
+        if (conn == null || conn.readyState == WebSocket.CLOSED) {
+            console.log("connection is null!");
+            return false;
+        }
+    
+        if (conn.readyState == WebSocket.CLOSED) {
+            console.log("connection is closed!");
+            return false;
+        }
+    
+        var records = document.getElementById("records");
+        records.innerHTML = "";
+        conn.send("resetrecords");
+        addInfoToStatusBar("Reseted!");
+        
+    });
+}
+
 function initialWebSocket() {
     if (conn != null) conn = null;
     var records = document.getElementById("records");
@@ -105,7 +126,8 @@ document.addEventListener("visibilitychange", function() {
 });
 
 window.onload = function () {
-    initialWebSocket()
+    initialWebSocket();
+    bindResetRecord();
 };
 
 </script>
@@ -148,6 +170,15 @@ body {
     margin: 4px 15px;
 }
 
+#reset-records {
+    width: 280px;
+    height: 50px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 40px;
+}
+
 
 </style>
 </head>
@@ -156,5 +187,6 @@ body {
     <table id="records" class="table"></table>
 </div>
 <div id="status-bar" class="card"></div>
+<button id="reset-records" type="button" class="btn btn-danger">ResetTheRecords</button>
 </body>
 </html>
